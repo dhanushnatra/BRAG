@@ -1,7 +1,6 @@
 
 # Use fasttext for embeddings
 import fasttext
-import fasttext.util
 
 # Save sentences to a text file for fasttext training
 sentences = [
