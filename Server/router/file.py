@@ -12,6 +12,9 @@ async def upload_file(file: UploadFile = File(...)):
     
     with open(os.path.join("data", file.filename), "wb") as f:
         f.write(await file.read())
+
+
+        
     return {"filename": file.filename}
 
 

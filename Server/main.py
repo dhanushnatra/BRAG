@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .router.file import router as file_router
+from .router import file,audio
 from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
@@ -10,6 +10,5 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-app.include_router(file_router)
+app.include_router(file.router)
+app.include_router(audio.router)

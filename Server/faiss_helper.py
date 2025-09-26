@@ -16,10 +16,14 @@ with open("sentences.txt", "w") as f:
 ft_model = fasttext.train_unsupervised("sentences.txt", model='skipgram',minCount=1)
 
 from langchain_community.document_loaders import PyPDFLoader
+
+
+
+
+
 def load_pdf(file_path):
     loader = PyPDFLoader(file_path)
     return loader.load()
-
 from langchain.embeddings.base import Embeddings
 import numpy as np
 
@@ -43,14 +47,23 @@ class FastTextEmbeddings(Embeddings):
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 
-docs = load_pdf("data/dhanush-natra ( Resume ) .pdf")
+#load docs
+docs = load_pdf("data/flutter_tutorial.pdf")
 print(f"Loaded {len(docs)} documents from PDF.")
 
+#text Splitting
 splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
 docs = splitter.split_documents(docs)
 
 
+
+#vectors store
 from langchain_community.vectorstores import FAISS
 
 embeddings = FastTextEmbeddings(ft_model)
 vectorstore = FAISS.from_documents(docs, embeddings)
+
+
+
+# save vectorstore
+vectorstore.save_local("faiss_index")
